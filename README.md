@@ -64,24 +64,24 @@ Aplicación web desarrollada en Vue.js para la gestión y análisis de gastos pe
 ## 📁 Estructura del Proyecto
 TP-FINAL-APP_GASTOS-dev/
 ├── src/
-│ ├── components/ # Componentes Vue
-│ │ ├── Login.vue # Componente de inicio de sesión
-│ │ ├── Register.vue # Componente de registro
-│ │ ├── Home.vue # Página de inicio
-│ │ ├── Gastos.vue # Listado de gastos
-│ │ ├── Estadisticas.vue # Dashboard de estadísticas
-│ │ └── NavBar.vue # Barra de navegación
-│ ├── services/ # Servicios de API
-│ │ ├── user.service.js # Servicio de usuarios
-│ │ └── gastos.service.js # Servicio de gastos
-│ ├── stores/ # Stores de Pinia
-│ │ └── authStore.js # Store de autenticación
-│ ├── routes/ # Configuración de rutas
-│ │ └── router.js # Router de Vue
-│ ├── utils/ # Utilidades
-│ │ └── auth.utils.js # Utilidades de autenticación
-│ ├── App.vue # Componente raíz
-│ └── main.js # Punto de entrada
-├── package.json # Dependencias y scripts
-├── vite.config.js # Configuración de Vite
-└── README.md # Este archivo
+│ ├── components/
+│ │ ├── Login.vue             # Componente de inicio de sesión
+│ │ ├── Register.vue          # Componente de registro
+│ │ ├── Home.vue              # Página de inicio
+│ │ ├── Gastos.vue            # Listado y gestión de gastos
+│ │ ├── Estadisticas.vue      # Dashboard de estadísticas y gráficos
+│ │ └── NavBar.vue            # Barra de navegación principal
+│ ├── services/
+│ │ ├── user.service.js       # Servicios de comunicación con la API para usuarios
+│ │ └── gastos.service.js     # Servicios de comunicación con la API para gastos
+│ ├── stores/
+│ │ └── authStore.js          # Store de Pinia para la gestión del estado de autenticación
+│ ├── routes/
+│ │ └── router.js             # Configuración de las rutas de Vue Router
+│ ├── utils/
+│ │ └── auth.utils.js         # Funciones de utilidad para la autenticación (e.g., manejo de tokens)
+│ ├── App.vue                 # Componente raíz de la aplicación
+│ └── main.js                 # Punto de entrada de la aplicación (monta Vue, Pinia y Router)
+├── package.json              # Dependencias del proyecto y scripts definidos
+├── vite.config.js            # Archivo de configuración para Vite
+└── README.md                 # Documentación del proyecto (Este archivo)
