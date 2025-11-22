@@ -62,26 +62,94 @@ Aplicación web desarrollada en Vue.js para la gestión y análisis de gastos pe
 - **@vitejs/plugin-vue 6.0.1**: Plugin de Vite para Vue
 
 ## 📁 Estructura del Proyecto
+```text
 TP-FINAL-APP_GASTOS-dev/
 ├── src/
-│ ├── components/
-│ │ ├── Login.vue             # Componente de inicio de sesión
-│ │ ├── Register.vue          # Componente de registro
-│ │ ├── Home.vue              # Página de inicio
-│ │ ├── Gastos.vue            # Listado y gestión de gastos
-│ │ ├── Estadisticas.vue      # Dashboard de estadísticas y gráficos
-│ │ └── NavBar.vue            # Barra de navegación principal
-│ ├── services/
-│ │ ├── user.service.js       # Servicios de comunicación con la API para usuarios
-│ │ └── gastos.service.js     # Servicios de comunicación con la API para gastos
-│ ├── stores/
-│ │ └── authStore.js          # Store de Pinia para la gestión del estado de autenticación
-│ ├── routes/
-│ │ └── router.js             # Configuración de las rutas de Vue Router
-│ ├── utils/
-│ │ └── auth.utils.js         # Funciones de utilidad para la autenticación (e.g., manejo de tokens)
-│ ├── App.vue                 # Componente raíz de la aplicación
-│ └── main.js                 # Punto de entrada de la aplicación (monta Vue, Pinia y Router)
-├── package.json              # Dependencias del proyecto y scripts definidos
-├── vite.config.js            # Archivo de configuración para Vite
-└── README.md                 # Documentación del proyecto (Este archivo)
+│   ├── components/           # Componentes Vue
+│   │   ├── Login.vue         # Componente de inicio de sesión
+│   │   ├── Register.vue      # Componente de registro
+│   │   ├── Home.vue          # Página de inicio
+│   │   ├── Gastos.vue        # Listado de gastos
+│   │   ├── Estadisticas.vue  # Dashboard de estadísticas
+│   │   └── NavBar.vue        # Barra de navegación
+│   ├── services/             # Servicios de API
+│   │   ├── user.service.js   # Servicio de usuarios
+│   │   └── gastos.service.js # Servicio de gastos
+│   ├── stores/               # Stores de Pinia
+│   │   └── authStore.js      # Store de autenticación
+│   ├── routes/               # Configuración de rutas
+│   │   └── router.js         # Router de Vue
+│   ├── utils/                # Utilidades
+│   │   └── auth.utils.js     # Utilidades de autenticación
+│   ├── App.vue               # Componente raíz
+│   └── main.js               # Punto de entrada
+├── package.json              # Dependencias y scripts
+├── vite.config.js            # Configuración de Vite
+└── README.md                 # Documentación
+
+# 🔌 API Externa
+
+La aplicación utiliza MockAPI como backend para almacenar datos:
+
+- **URL de Usuarios**: `https://69190be29ccba073ee92089d.mockapi.io/api/users`
+- **URL de Gastos**: `https://69190be29ccba073ee92089d.mockapi.io/api/gastos`
+
+## 📱 Rutas de la Aplicación
+
+- `/` - Página de inicio de sesión (pública)
+- `/login` - Página de inicio de sesión (pública)
+- `/register` - Página de registro (pública)
+- `/home` - Página de inicio (requiere autenticación)
+- `/gastos` - Listado de gastos (requiere autenticación)
+- `/estadisticas` - Dashboard de estadísticas (requiere autenticación)
+
+## 🔒 Seguridad
+
+- Las contraseñas se encriptan usando bcryptjs antes de almacenarse
+- Las rutas protegidas requieren autenticación
+- El estado de autenticación se persiste de forma segura
+- Validación de formularios en el cliente
+
+## 🎨 Características de UI
+
+- **Diseño responsivo**: Adaptable a diferentes tamaños de pantalla
+- **Tema moderno**: Interfaz limpia con Bootstrap y PrimeVue
+- **Gráficos interactivos**: Visualizaciones dinámicas con ApexCharts
+- **Búsqueda en tiempo real**: Filtrado instantáneo de datos
+- **Formato localizado**: Fechas y monedas en formato argentino (es-AR)
+
+## 📊 Funcionalidades del Dashboard
+
+### Métricas Calculadas
+- Suma total de todos los gastos
+- Promedio de gastos por transacción
+- Cantidad total de registros
+- Gasto máximo individual
+
+### Visualizaciones
+- **Gráfico de líneas**: Evolución de gastos por mes
+- **Gráficos de barras**: Comparación por método de pago y descripción
+- **Tabla resumen**: Análisis detallado por método de pago
+
+## 👤 Uso de la Aplicación
+
+1. **Registro**: Crea una cuenta nueva con email, nombre de usuario y contraseña
+2. **Inicio de sesión**: Accede con tus credenciales
+3. **Ver gastos**: Navega a la sección "Gastos" para ver todos los registros
+4. **Analizar**: Visita "Estadísticas" para ver gráficos y métricas
+5. **Cerrar sesión**: Usa el botón en la barra de navegación
+
+## 🔧 Configuración del Servidor
+
+El servidor de desarrollo está configurado en `vite.config.js` con:
+- Puerto: 5173
+- Host: true (accesible desde la red local)
+- Apertura automática del navegador
+
+## 📝 Notas Adicionales
+
+- La aplicación utiliza una API externa (MockAPI) para almacenar datos
+- El estado de autenticación persiste entre sesiones del navegador
+- Los gráficos se generan dinámicamente basados en los datos de gastos
+- El formato de fechas y monedas está configurado para Argentina
+
