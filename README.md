@@ -62,3 +62,26 @@ Aplicación web desarrollada en Vue.js para la gestión y análisis de gastos pe
 - **@vitejs/plugin-vue 6.0.1**: Plugin de Vite para Vue
 
 ## 📁 Estructura del Proyecto
+TP-FINAL-APP_GASTOS-dev/
+├── src/
+│ ├── components/ # Componentes Vue
+│ │ ├── Login.vue # Componente de inicio de sesión
+│ │ ├── Register.vue # Componente de registro
+│ │ ├── Home.vue # Página de inicio
+│ │ ├── Gastos.vue # Listado de gastos
+│ │ ├── Estadisticas.vue # Dashboard de estadísticas
+│ │ └── NavBar.vue # Barra de navegación
+│ ├── services/ # Servicios de API
+│ │ ├── user.service.js # Servicio de usuarios
+│ │ └── gastos.service.js # Servicio de gastos
+│ ├── stores/ # Stores de Pinia
+│ │ └── authStore.js # Store de autenticación
+│ ├── routes/ # Configuración de rutas
+│ │ └── router.js # Router de Vue
+│ ├── utils/ # Utilidades
+│ │ └── auth.utils.js # Utilidades de autenticación
+│ ├── App.vue # Componente raíz
+│ └── main.js # Punto de entrada
+├── package.json # Dependencias y scripts
+├── vite.config.js # Configuración de Vite
+└── README.md # Este archivo
