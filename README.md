@@ -87,7 +87,9 @@ TP-FINAL-APP_GASTOS-dev/
 ├── vite.config.js            # Configuración de Vite
 └── README.md                 # Documentación
 
-# 🔌 API Externa
+
+
+## 🔌 API Externa
 
 La aplicación utiliza MockAPI como backend para almacenar datos:
 
