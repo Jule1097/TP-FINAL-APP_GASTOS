@@ -15,4 +15,15 @@ export class GastosService {
             return null;
         }
     };
+
+    createGasto = async (gasto) => {
+        try {
+            const res = await axios.post(this.#url, gasto);
+            return res.data;
+        } catch (error) {
+            console.error("Error creando gasto:", error);
+            return null;
+        }
+    }
+    
 }
