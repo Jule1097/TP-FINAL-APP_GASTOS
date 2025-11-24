@@ -5,6 +5,7 @@ import Login from "../components/Login.vue";
 import Home from "../components/Home.vue";
 import Gastos from "../components/Gastos.vue";
 import Estadisticas from "../components/Estadisticas.vue";
+import ExpensesForm from "../components/ExpensesForm.vue";
 
 const routes = [
   { path: "/", component: Login},
@@ -12,7 +13,9 @@ const routes = [
   { path: "/gastos", component: Gastos, meta: { requiresAuth: true }},
   { path: "/register", component: Register,},
   { path: "/login", component: Login,},
+  { path: "/expenses", component: ExpensesForm, meta: { requiresAuth: true }},
   { path: "/estadisticas", component: Estadisticas, meta: { requiresAuth: true }},
+  { path: "/:pathMatch(.*)*", redirect: "/login" }
 ];
 
 const router = createRouter({
