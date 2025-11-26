@@ -25,5 +25,27 @@ export class GastosService {
             return null;
         }
     }
+
+    updateGasto = async (id, gasto) => {
+        try {
+            const res = await axios.put(`${this.#url}/${id}`, gasto);   // Corregido aquí
+            return res.data;
+        } catch (error) {
+            console.error("Error actualizando gasto:", error);
+            return null;
+        }
+    };
+
+    deleteGasto = async (id) => {
+        try {
+            const res = await axios.delete(`${this.#url}/${id}`);
+            return res.data;
+        } catch (error) {
+            console.error("Error eliminando gasto:", error);
+            return null;
+        }
+    };
+
+    
     
 }
