@@ -16,6 +16,17 @@
       </div>
 
       <div class="mb-3">
+        <label class="form-label">Método de pago</label>
+        <select v-model="form.metodoPago" class="form-select" required>
+          <option value="" disabled>Seleccionar...</option>
+          <option value="efectivo">Efectivo</option>
+          <option value="debito">Débito</option>
+          <option value="credito">Crédito</option>
+          <option value="transferencia">Transferencia</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
         <label>Monto</label>
         <input type="number" v-model.number="form.amount" class="form-control" />
       </div>
@@ -50,7 +61,8 @@ export default {
         category: "",
         amount: null,
         date: "",
-        description: ""
+        description: "",
+        metodoPago: ""
       },
       errorMsg: "",
       successMsg: ""
