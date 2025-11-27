@@ -3,20 +3,29 @@ import { GastosService } from "../services/gastos.service";
 
 export const useExpenseStore = defineStore("expenses", {    
     state: () => ({
-        expensesList: []        // array para almacenar los gastos
+        expensesList: []      
     }),
 
     actions: {
-        async loadExpenses() {                          // carga los gastos desde el servicio
-            const service = new GastosService();        // instancia del servicio
-            const data = await service.getGastos();     // obtiene los gastos
-            if (data) this.expensesList = data;        // actualiza el estado con los gastos obtenidos
+        async loadExpenses() {                          
+            const service = new GastosService();        
+            const data = await service.getGastos();     
+            if (data) this.expensesList = data;        
         },
 
-        async addExpense(expense) {                  // agrega un nuevo gasto   
+        async addExpense(expense) {                    
             const service = new GastosService();        
             const newExpense = await service.createGasto(expense);  
-            if (newExpense) this.expensesList.push(newExpense);     // actualiza el estado con el nuevo gasto
+            if (newExpense) this.expensesList.push(newExpense);     
+        },
+
+        async deleteExpense(id) {
+            const service = new GastosService();
+            const deletedExpense = await service.deleteGasto(id);
+
+            if (deletedExpense) {
+                this.expensesList = this.expensesList.filter((expense) => expense.id !== id);
+            }
         }
     },
     getters: {

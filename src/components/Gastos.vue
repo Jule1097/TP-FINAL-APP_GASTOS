@@ -25,7 +25,7 @@
                         stripedRows
                         showGridlines
                         responsiveLayout="scroll"
-                        class="p-datatable-sm"
+                        class="p-datatable-sm table-responsive"
                         :emptyMessage="'No hay gastos registrados'"
                     >
                         <template #header>
@@ -84,6 +84,14 @@
                         <Column field="fechaGasto" header="Fecha" :sortable="true" style="min-width: 150px">
                             <template #body="{ data }">
                                 {{ formatFecha(data.fechaGasto) }}
+                            </template>
+                        </Column>
+                        <Column header="Acciones" style="min-width: 120px">
+                            <template #body="{ data }">
+                                <div class="d-flex gap-2">
+                                    <Button icon="pi pi-pencil" size="small" severity="success" class="action-btn"></Button>
+                                    <Button icon="pi pi-trash" size="small" severity="danger" class="action-btn" @click="eliminarGasto(data.id)"></Button>
+                                </div>
                             </template>
                         </Column>
                     </DataTable>
@@ -173,6 +181,17 @@ const cargarGastos = async () => {
     }
 };
 
+const eliminarGasto = async (id) => {
+    try {
+        const confirmation = window.confirm(`¿Estás seguro de que deseas eliminar el gasto con el ID ${id}?`);
+        if(confirmation) {
+            await store.deleteExpense(id);
+            await cargarGastos();
+        }
+    } catch(error) {
+        console.error('Error al eliminar el gasto con ID:', id);
+    }
+}
 
 onMounted(() => {
     cargarGastos();
@@ -231,6 +250,15 @@ onMounted(() => {
 :deep(.p-inputtext) {
     width: 100%;
 }
+
+:deep(.action-btn) {
+    font-size: 12px !important;
+    padding: 0.25rem 0.5rem !important; 
+    width: 32px !important; 
+    height: 32px !important; 
+    border-radius: 4px !important; 
+}
+
 
 .card {
     border-radius: 8px;

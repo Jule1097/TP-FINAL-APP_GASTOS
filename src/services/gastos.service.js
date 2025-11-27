@@ -32,7 +32,6 @@ export class GastosService {
             return res.data;
         } catch (error) {
             console.error("Error actualizando gasto:", error);
-            return null;
         }
     };
 
@@ -42,10 +41,7 @@ export class GastosService {
             return res.data;
         } catch (error) {
             console.error("Error eliminando gasto:", error);
-            return null;
         }
     };
 
-    
-    
 }
