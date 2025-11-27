@@ -12,12 +12,14 @@ Aplicación web desarrollada en Vue.js para la gestión y análisis de gastos pe
 
 ### 💰 Gestión de Gastos
 - **Listado completo**: Visualización de todos los gastos registrados
-- **Búsqueda avanzada**: Filtrado en tiempo real por cualquier campo (ID, descripción, monto, método de pago, fecha)
+- **Búsqueda avanzada**: Filtrado en tiempo real por cualquier campo (ID, descripción, monto, método de pago, fecha, categoria)
 - **Tabla interactiva**: 
   - Paginación configurable (10, 20, 50 registros por página)
   - Ordenamiento múltiple por columnas
   - Formato de moneda y fechas en español argentino
 - **Actualización de datos**: Botón para refrescar la información
+- **Agregar gastos**: Formulario dedicado para crear nuevos registros (ExpensesForm.vue)
+- **Editar gastos**: Modal interactivo para actualizar registros existentes (ModalEdit.vue)
 
 ### 📈 Dashboard de Estadísticas
 - **Métricas principales**:
@@ -68,43 +70,40 @@ TP-FINAL-APP_GASTOS-dev/
 │   ├── components/           # Componentes Vue
 │   │   ├── Login.vue         # Componente de inicio de sesión
 │   │   ├── Register.vue      # Componente de registro
-│   │   ├── Home.vue          # Página de inicio
 │   │   ├── Gastos.vue        # Listado de gastos
 │   │   ├── Estadisticas.vue  # Dashboard de estadísticas
-│   │   └── NavBar.vue        # Barra de navegación
+│   │   ├── NavBar.vue        # Barra de navegación
+│   │   ├── ModalEdit.vue     # Modal para editar gastos con validaciones
+│   │   └── ExpensesForm.vue  # Formulario para agregar nuevos gastos
 │   ├── services/             # Servicios de API
 │   │   ├── user.service.js   # Servicio de usuarios
 │   │   └── gastos.service.js # Servicio de gastos
 │   ├── stores/               # Stores de Pinia
-│   │   └── authStore.js      # Store de autenticación
+│   │   ├── authStore.js      # Store de autenticación
+│   │   └── expenseStore.js   # Store de gastos
 │   ├── routes/               # Configuración de rutas
 │   │   └── router.js         # Router de Vue
 │   ├── utils/                # Utilidades
 │   │   └── auth.utils.js     # Utilidades de autenticación
 │   ├── App.vue               # Componente raíz
 │   └── main.js               # Punto de entrada
+├── vercel.json               # Configuración para deploy en Vercel
 ├── package.json              # Dependencias y scripts
 ├── vite.config.js            # Configuración de Vite
 └── README.md                 # Documentación
-
 ```
-
-
 
 ## 🔌 API Externa
 
 La aplicación utiliza MockAPI como backend para almacenar datos:
 
-- **URL de Usuarios**: `https://69190be29ccba073ee92089d.mockapi.io/api/users`
-- **URL de Gastos**: `https://69190be29ccba073ee92089d.mockapi.io/api/gastos`
-
 ## 📱 Rutas de la Aplicación
 
-- `/` - Página de inicio de sesión (pública)
+- `/` - Página de inicio de sesión, redirige al login si no hay autenticación (pública)
 - `/login` - Página de inicio de sesión (pública)
 - `/register` - Página de registro (pública)
-- `/home` - Página de inicio (requiere autenticación)
 - `/gastos` - Listado de gastos (requiere autenticación)
+- `/expenses` - Formulario para agregar gastos (requiere autenticación)
 - `/estadisticas` - Dashboard de estadísticas (requiere autenticación)
 
 ## 🔒 Seguridad
@@ -140,15 +139,12 @@ La aplicación utiliza MockAPI como backend para almacenar datos:
 1. **Registro**: Crea una cuenta nueva con email, nombre de usuario y contraseña
 2. **Inicio de sesión**: Accede con tus credenciales
 3. **Ver gastos**: Navega a la sección "Gastos" para ver todos los registros
-4. **Analizar**: Visita "Estadísticas" para ver gráficos y métricas
-5. **Cerrar sesión**: Usa el botón en la barra de navegación
+4. **Agregar gasto**: Navega a "Agregar Gasto" para crear un nuevo registro
+5. **Editar gasto**: Haz clic en el botón de editar en la tabla para abrir el modal
+6. **Analizar**: Visita "Estadísticas" para ver gráficos y métricas
+7. **Cerrar sesión**: Usa el botón en la barra de navegación
 
-## 🔧 Configuración del Servidor
-
-El servidor de desarrollo está configurado en `vite.config.js` con:
-- Puerto: 5173
-- Host: true (accesible desde la red local)
-- Apertura automática del navegador
+## 🚀 Deploy en Vercel
 
 ## 📝 Notas Adicionales
 
@@ -156,4 +152,3 @@ El servidor de desarrollo está configurado en `vite.config.js` con:
 - El estado de autenticación persiste entre sesiones del navegador
 - Los gráficos se generan dinámicamente basados en los datos de gastos
 - El formato de fechas y monedas está configurado para Argentina
-
