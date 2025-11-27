@@ -115,7 +115,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import Navbar from './Navbar.vue';
+import Navbar from './NavBar.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
