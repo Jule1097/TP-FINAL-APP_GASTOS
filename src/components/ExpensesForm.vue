@@ -53,7 +53,7 @@
 
 <script>
 import { useExpenseStore } from "../stores/expenseStore";
-import NavBar from './Navbar.vue';
+import NavBar from './NavBar.vue';
 
 export default {
   name: "ExpensesForm",
