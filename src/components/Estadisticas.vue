@@ -160,7 +160,7 @@
 </template>
 
 <script>
-import Navbar from './Navbar.vue';
+import Navbar from './NavBar.vue';
 import { GastosService } from '../services/gastos.service.js';
 import VueApexCharts from 'vue3-apexcharts';
 
