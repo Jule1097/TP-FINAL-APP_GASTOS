@@ -20,16 +20,16 @@
         <label class="form-label">Método de pago</label>
         <select v-model="form.metodoPago" class="form-select" required>
           <option value="" disabled>Seleccionar...</option>
-          <option value="efectivo">Efectivo</option>
-          <option value="debito">Débito</option>
-          <option value="credito">Crédito</option>
-          <option value="transferencia">Transferencia</option>
+          <option >Efectivo</option>
+          <option >Debito</option>
+          <option >Credito</option>
+          <option >Transferencia</option>
         </select>
       </div>
 
       <div class="mb-3">
         <label>Monto</label>
-        <input type="number" v-model.number="form.monto" class="form-control" />
+        <input type="number" step="any" v-model.number="form.monto" class="form-control" />
       </div>
 
       <div class="mb-3">
@@ -76,7 +76,7 @@ export default {
 
   methods: {
     validate() {
-      if (!this.form.category || !this.form.monto || !this.form.fechaGasto || !this.form.descripcionGasto) {
+      if (!this.form.category || !this.form.monto || !this.form.fechaGasto || !this.form.descripcionGasto || !this.form.metodoPago) {
         this.errorMsg = "Todos los campos son obligatorios.";
         return false;
       }

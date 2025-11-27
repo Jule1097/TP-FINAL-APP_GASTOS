@@ -64,6 +64,12 @@
                                 {{ data.descripcionGasto || 'Sin descripción' }}
                             </template>
                         </Column>
+
+                        <Column field="category" header="Categoría" :sortable="true" style="min-width: 200px">
+                            <template #body="{ data }">
+                                {{ data.category || 'Sin categoría' }}
+                            </template>
+                        </Column>
                         
                         <Column field="monto" header="Monto" :sortable="true" style="min-width: 120px">
                             <template #body="{ data }">
@@ -89,16 +95,16 @@
                         <Column header="Acciones" style="min-width: 120px">
                             <template #body="{ data }">
                                 <div class="d-flex gap-2">
-                                    <Button icon="pi pi-pencil" size="small" severity="success" class="action-btn"></Button>
+                                    <Button icon="pi pi-pencil" size="small" severity="success" class="action-btn" @click="abrirModalEdicion(data.id)"></Button>
                                     <Button icon="pi pi-trash" size="small" severity="danger" class="action-btn" @click="eliminarGasto(data.id)"></Button>
                                 </div>
                             </template>
                         </Column>
-                    </DataTable>
-                    
+                        <ModalEdit :show="showModal" :gasto="gastoEditar" @close="cerrarModal" @saved="guardarGasto"></ModalEdit>
+                    </DataTable>                    
                     <div v-if="!loading && gastos.length > 0" class="mt-3">
                         <p class="text-muted">
-                            <strong>Total de registros:</strong> {{ gastos.length }}
+                            <strong>Total de registros:</strong> {{ mostrarTotalRegistros }}
                         </p>
                     </div>
                 </div>
@@ -114,11 +120,14 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import ModalEdit from './ModalEdit.vue';
 import { useExpenseStore } from '../stores/expenseStore.js';
 
 const gastos = ref([]);
 const loading = ref(true);
 const globalFilter = ref(null);
+const gastoEditar = ref({});
+const showModal = ref(false);
 
 const store = useExpenseStore();
 
@@ -131,6 +140,7 @@ const gastosFiltrados = computed(() => {
     return gastos.value.filter(gasto => {
         const descripcion = (gasto.descripcionGasto || '').toLowerCase();
         const metodoPago = (gasto.metodoPago || '').toLowerCase();
+        const category = (gasto.category || '').toLowerCase();
         const monto = String(gasto.monto || '').toLowerCase();
         const fecha = formatFecha(gasto.fechaGasto).toLowerCase();
         const id = String(gasto.id || '').toLowerCase();
@@ -139,9 +149,14 @@ const gastosFiltrados = computed(() => {
                metodoPago.includes(filter) ||
                monto.includes(filter) ||
                fecha.includes(filter) ||
-               id.includes(filter);
+               id.includes(filter) ||
+               category.includes(filter);
     });
 });
+
+const mostrarTotalRegistros = computed(() => {
+    return gastosFiltrados.value.length;
+})
 
 const formatMonto = (monto) => {
     const num = parseFloat(monto) || 0;
@@ -152,17 +167,21 @@ const formatMonto = (monto) => {
 };
 
 const formatFecha = (fecha) => {
-    if (!fecha) return 'Sin fecha';
-    try {
-        const date = new Date(fecha);
-        return date.toLocaleDateString('es-AR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    } catch (error) {
-        return fecha;
-    }
+  if (!fecha) return 'Sin fecha';
+  if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    const [year, month, day] = fecha.split('-');
+    return `${day}/${month}/${year}`;
+  }
+  try {
+    const date = new Date(fecha);
+    return date.toLocaleDateString('es-AR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  } catch (error) {
+    return fecha;
+  }
 };
 
 const cargarGastos = async () => {
@@ -192,6 +211,29 @@ const eliminarGasto = async (id) => {
         console.error('Error al eliminar el gasto con ID:', id);
     }
 }
+
+const abrirModalEdicion = async(id) => {
+    const buscarGasto = gastos.value.find(gasto => gasto.id === id);
+
+    if(buscarGasto) {
+        gastoEditar.value = {...buscarGasto};
+        showModal.value = true;
+    }
+}
+
+const guardarGasto = async(gastoEditado) => {
+    try{
+        await store.updateExpense(gastoEditado.id, gastoEditado);
+        await cargarGastos();
+    }catch(error) {
+        console.log(error);
+        console.error('Error al editar el gasto con ID:', gastoEditado.id);
+    }
+}
+
+const cerrarModal = () => {
+  showModal.value = false;
+};
 
 onMounted(() => {
     cargarGastos();

@@ -21,11 +21,12 @@ export const useExpenseStore = defineStore("expenses", {
 
         async deleteExpense(id) {
             const service = new GastosService();
-            const deletedExpense = await service.deleteGasto(id);
+            await service.deleteGasto(id);
+        },
 
-            if (deletedExpense) {
-                this.expensesList = this.expensesList.filter((expense) => expense.id !== id);
-            }
+        async updateExpense(id, expense) {
+            const service = new GastosService();
+            await service.updateGasto(id, expense);
         }
     },
     getters: {

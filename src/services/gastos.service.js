@@ -31,6 +31,7 @@ export class GastosService {
             const res = await axios.put(`${this.#url}/${id}`, gasto);
             return res.data;
         } catch (error) {
+            console.log(id, gasto)
             console.error("Error actualizando gasto:", error);
         }
     };
