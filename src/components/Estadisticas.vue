@@ -432,14 +432,6 @@ export default {
             // Agrupar por descripción
             const descripcionCount = {};
             
-            // Debug: verificar estructura de los datos
-            if (this.gastos.length > 0) {
-                console.log('Primer gasto de ejemplo:', this.gastos[0]);
-                console.log('Campos disponibles:', Object.keys(this.gastos[0]));
-                console.log('descripcionGasto (directo):', this.gastos[0].descripcionGasto);
-                console.log('descripcionGasto (tipo):', typeof this.gastos[0].descripcionGasto);
-            }
-            
             this.gastos.forEach((gasto, index) => {
                 // Acceder directamente al campo descripcionGasto
                 let desc = gasto.descripcionGasto;
@@ -459,24 +451,12 @@ export default {
                 // Si está vacío después de limpiar, usar "Sin descripción"
                 const descFinal = desc !== '' ? desc : 'Sin descripción';
                 
-                // Debug para los primeros 3 gastos
-                if (index < 3) {
-                    console.log(`Gasto ${index}:`, {
-                        original: gasto.descripcionGasto,
-                        procesado: descFinal,
-                        monto: gasto.monto
-                    });
-                }
-                
                 if (!descripcionCount[descFinal]) {
                     descripcionCount[descFinal] = 0;
                 }
                 descripcionCount[descFinal] += parseFloat(gasto.monto) || 0;
             });
             
-            console.log('Descripciones agrupadas:', descripcionCount);
-            console.log('Total de descripciones únicas:', Object.keys(descripcionCount).length);
-
             // Ordenar y tomar top 10
             const sorted = Object.entries(descripcionCount)
                 .sort((a, b) => b[1] - a[1])

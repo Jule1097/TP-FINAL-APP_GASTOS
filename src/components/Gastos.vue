@@ -226,7 +226,6 @@ const guardarGasto = async(gastoEditado) => {
         await store.updateExpense(gastoEditado.id, gastoEditado);
         await cargarGastos();
     }catch(error) {
-        console.log(error);
         console.error('Error al editar el gasto con ID:', gastoEditado.id);
     }
 }
