@@ -81,8 +81,6 @@ export default {
     },
     async handleLogin() {
 
-        const userData = { ...this.formData };
-
         const res = await this.userService.userLogin(this.formData);
 
         if(res.success) {

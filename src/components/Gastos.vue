@@ -41,9 +41,15 @@
                                 <Button 
                                     icon="pi pi-refresh" 
                                     label="Actualizar" 
-                                    @click="getAllGastos"
+                                    @click="cargarGastos"
                                     class="p-button-outlined"
-                                />
+                                ></Button>
+                                <Button 
+                                    icon="pi pi-plus" 
+                                    label="Agregar"
+                                    @click="$router.push('/expenses')" 
+                                    class="p-button-outlined mx-3 px-3"
+                                ></Button>
                             </div>
                         </template>
                         
@@ -93,93 +99,84 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue';
 import Navbar from './Navbar.vue';
-import { GastosService } from '../services/gastos.service.js';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import { useExpenseStore } from '../stores/expenseStore.js';
 
-export default {
-    name: 'Gastos',
-    components: {
-        Navbar,
-        DataTable,
-        Column,
-        InputText,
-        Button
-    },
-    data() {
-        return {
-            gastosService: new GastosService(),
-            gastos: [],
-            loading: true,
-            globalFilter: null
-        };
-    },
-    computed: {
-        gastosFiltrados() {
-            if (!this.globalFilter || this.globalFilter.trim() === '') {
-                return this.gastos;
-            }
-            
-            const filter = this.globalFilter.toLowerCase();
-            return this.gastos.filter(gasto => {
-                const descripcion = (gasto.descripcionGasto || '').toLowerCase();
-                const metodoPago = (gasto.metodoPago || '').toLowerCase();
-                const monto = String(gasto.monto || '').toLowerCase();
-                const fecha = this.formatFecha(gasto.fechaGasto).toLowerCase();
-                const id = String(gasto.id || '').toLowerCase();
-                
-                return descripcion.includes(filter) ||
-                       metodoPago.includes(filter) ||
-                       monto.includes(filter) ||
-                       fecha.includes(filter) ||
-                       id.includes(filter);
-            });
-        }
-    },
-    methods: {
-        async getAllGastos() {
-            try {
-                this.loading = true;
-                this.gastos = await this.gastosService.getGastos();
-                if (!this.gastos) {
-                    this.gastos = [];
-                }
-            } catch (error) {
-                console.error('Error cargando gastos:', error);
-                this.gastos = [];
-            } finally {
-                this.loading = false;
-            }
-        },
-        formatMonto(monto) {
-            const num = parseFloat(monto) || 0;
-            return num.toLocaleString('es-AR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-        },
-        formatFecha(fecha) {
-            if (!fecha) return 'Sin fecha';
-            try {
-                const date = new Date(fecha);
-                return date.toLocaleDateString('es-AR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            } catch (error) {
-                return fecha;
-            }
-        }
-    },
-    mounted() {
-        this.getAllGastos();
+const gastos = ref([]);
+const loading = ref(true);
+const globalFilter = ref(null);
+
+const store = useExpenseStore();
+
+const gastosFiltrados = computed(() => {
+    if (!globalFilter.value || globalFilter.value.trim() === '') {
+        return gastos.value;
+    }
+    
+    const filter = globalFilter.value.toLowerCase();
+    return gastos.value.filter(gasto => {
+        const descripcion = (gasto.descripcionGasto || '').toLowerCase();
+        const metodoPago = (gasto.metodoPago || '').toLowerCase();
+        const monto = String(gasto.monto || '').toLowerCase();
+        const fecha = formatFecha(gasto.fechaGasto).toLowerCase();
+        const id = String(gasto.id || '').toLowerCase();
+        
+    return descripcion.includes(filter) ||
+               metodoPago.includes(filter) ||
+               monto.includes(filter) ||
+               fecha.includes(filter) ||
+               id.includes(filter);
+    });
+});
+
+const formatMonto = (monto) => {
+    const num = parseFloat(monto) || 0;
+    return num.toLocaleString('es-AR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+};
+
+const formatFecha = (fecha) => {
+    if (!fecha) return 'Sin fecha';
+    try {
+        const date = new Date(fecha);
+        return date.toLocaleDateString('es-AR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    } catch (error) {
+        return fecha;
     }
 };
+
+const cargarGastos = async () => {
+    try {
+        loading.value = true;
+        await store.loadExpenses();
+        gastos.value = store.getExpensesList;
+        if(!gastos.value) {
+            gastos.value = [];
+        }
+    } catch(error) {
+        console.error('Error al cargar los gastos:', error);
+        gastos.value = [];
+    } finally {
+        loading.value = false;
+    }
+};
+
+
+onMounted(() => {
+    cargarGastos();
+});
 </script>
 
 <style scoped>

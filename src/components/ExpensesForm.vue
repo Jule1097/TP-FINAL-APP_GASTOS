@@ -1,6 +1,7 @@
 <template>
+  <NavBar></NavBar>
   <section class="container mt-4">
-    <h2>Registrar Gasto</h2>
+    <h2 class="my-3">Registrar Gasto</h2>
 
     <div class="card p-3">
 
@@ -28,17 +29,17 @@
 
       <div class="mb-3">
         <label>Monto</label>
-        <input type="number" v-model.number="form.amount" class="form-control" />
+        <input type="number" v-model.number="form.monto" class="form-control" />
       </div>
 
       <div class="mb-3">
         <label>Fecha</label>
-        <input type="date" v-model="form.date" class="form-control" />
+        <input type="date" v-model="form.fechaGasto" class="form-control" />
       </div>
 
       <div class="mb-3">
         <label>Descripción</label>
-        <input type="text" v-model="form.description" class="form-control" />
+        <input type="text" v-model="form.descripcionGasto" class="form-control" />
       </div>
 
       <button class="btn btn-primary" @click="submitForm">Agregar</button>
@@ -52,16 +53,20 @@
 
 <script>
 import { useExpenseStore } from "../stores/expenseStore";
+import NavBar from './Navbar.vue';
 
 export default {
   name: "ExpensesForm",
+  components: {
+    NavBar
+  },
   data() {
     return {
       form: {
         category: "",
-        amount: null,
-        date: "",
-        description: "",
+        monto: null,
+        fechaGasto: "",
+        descripcionGasto: "",
         metodoPago: ""
       },
       errorMsg: "",
@@ -71,12 +76,12 @@ export default {
 
   methods: {
     validate() {
-      if (!this.form.category || !this.form.amount || !this.form.date || !this.form.description) {
+      if (!this.form.category || !this.form.monto || !this.form.fechaGasto || !this.form.descripcionGasto) {
         this.errorMsg = "Todos los campos son obligatorios.";
         return false;
       }
 
-      if (this.form.amount <= 0) {
+      if (this.form.monto <= 0) {
         this.errorMsg = "El monto debe ser mayor a 0.";
         return false;
       }
@@ -95,7 +100,7 @@ export default {
 
       this.successMsg = "Gasto registrado con éxito.";
 
-      this.form = { category: "", amount: null, date: "", description: "" };
+      this.form = { category: "", monto: null, fechaGasto: "", descripcionGasto: "", metodoPago: "" };
     }
   }
 };
