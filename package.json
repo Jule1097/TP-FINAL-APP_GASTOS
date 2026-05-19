@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
     "@primeuix/themes": "^1.2.5",
     "apexcharts": "^5.3.6",
     "axios": "^1.13.2",

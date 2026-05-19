@@ -24,7 +24,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next("/login"); // si el usuario no esta autenticado, redirigir al login
+    next("/login"); 
   } else {
     next();
   }

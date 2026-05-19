@@ -14,7 +14,7 @@ export class UserService {
       return users.data;
     } catch (error) {
       console.error("Error fetching users:", error);
-      return [];
+      return [];  //
     }
   }
 

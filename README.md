@@ -152,3 +152,14 @@ La aplicación utiliza MockAPI como backend para almacenar datos:
 - El estado de autenticación persiste entre sesiones del navegador
 - Los gráficos se generan dinámicamente basados en los datos de gastos
 - El formato de fechas y monedas está configurado para Argentina
+
+## Ejecutar proyecto Android
+
+- npm install
+- npm run build
+- npx cap sync
+- npx cap open android
+
+**Para generar APK:**
+- cd android
+- .\gradlew.bat assembleDebug
