@@ -7,13 +7,42 @@ import Estadisticas from "../components/Estadisticas.vue";
 import ExpensesForm from "../components/ExpensesForm.vue";
 
 const routes = [
-  { path: "/", component: Login},
-  { path: "/gastos", component: Gastos, meta: { requiresAuth: true }},
-  { path: "/register", component: Register,},
-  { path: "/login", component: Login,},
-  { path: "/expenses", component: ExpensesForm, meta: { requiresAuth: true }},
-  { path: "/estadisticas", component: Estadisticas, meta: { requiresAuth: true }},
-  { path: "/:pathMatch(.*)*", redirect: "/login" }
+  { 
+    path: "/", 
+    redirect: "/login"
+  },
+  { 
+    path: "/gastos", 
+    name: "Gastos", 
+    component: Gastos, 
+    meta: { requiresAuth: true }
+  },
+  { 
+    path: "/register", 
+    name: "Register", 
+    component: Register 
+  },
+  { 
+    path: "/login", 
+    name: "Login", 
+    component: Login 
+  },
+  { 
+    path: "/expenses", 
+    name: "ExpensesForm", 
+    component: ExpensesForm, 
+    meta: { requiresAuth: true } 
+  },
+  { 
+    path: "/estadisticas", 
+    name: "Estadisticas", 
+    component: Estadisticas, 
+    meta: { requiresAuth: true } 
+  },
+  { 
+    path: "/:pathMatch(.*)*", 
+    redirect: "/login" 
+  }
 ];
 
 const router = createRouter({
@@ -24,7 +53,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next("/login"); 
+    next("/login");
+  } else if ( (to.path === "/login" || to.path === "/register") && authStore.isAuthenticated ) {
+    next( "/gastos" );
   } else {
     next();
   }
