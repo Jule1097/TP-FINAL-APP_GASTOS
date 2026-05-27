@@ -1,3 +1,4 @@
+
 <template>
   <NavBar></NavBar>
   <section class="container mt-4">
@@ -42,6 +43,12 @@
         <input type="text" v-model="form.descripcionGasto" class="form-control" />
       </div>
 
+      <button class="btn btn-secondary mb-3" @click="takePhoto"> Agregar comprobante </button>
+
+      <div v-if="form.imageUrl" class="mb-3">
+        <img :src="form.imageUrl" width="200" class="img-fluid rounded"/>
+      </div>
+
       <button class="btn btn-primary" @click="submitForm">Agregar</button>
 
       <p v-if="errorMsg" class="text-danger mt-2">{{ errorMsg }}</p>
@@ -52,6 +59,7 @@
 </template>
 
 <script>
+import { ImageService } from "../services/image.service";
 import { useExpenseStore } from "../stores/expenseStore";
 import NavBar from './NavBar.vue';
 
@@ -67,7 +75,8 @@ export default {
         monto: null,
         fechaGasto: "",
         descripcionGasto: "",
-        metodoPago: ""
+        metodoPago: "",
+        imageUrl: ""
       },
       errorMsg: "",
       successMsg: ""
@@ -89,6 +98,15 @@ export default {
       return true;
     },
 
+     async takePhoto() {
+      const imageService = new ImageService();
+      const image = await imageService.takePicture();
+
+      if (image) {
+        this.form.imageUrl = image;
+      }
+    },
+
     async submitForm() {
       this.errorMsg = "";
       this.successMsg = "";
@@ -102,6 +120,8 @@ export default {
 
       this.form = { category: "", monto: null, fechaGasto: "", descripcionGasto: "", metodoPago: "" };
     }
+
+
   }
 };
 </script>
